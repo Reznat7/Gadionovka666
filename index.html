@@ -66,7 +66,7 @@
         .meteor:nth-child(4) { left: 70%; animation-delay: 2s; }
         .meteor:nth-child(5) { left: 90%; animation-delay: 0.5s; }
 
-        /* --- ГЕРЛЯНДЫ --- */
+        /* --- ГИРЛЯНДЫ --- */
         .light { width: 12px; height: 18px; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; position: relative; transition: 0.3s; }
         .light::before { content: ''; position: absolute; background: #111; }
         .garland-top { width: 100%; height: 40px; border-bottom: 1px solid #222; display: flex; justify-content: space-around; padding: 0 5px; z-index: 10; }
@@ -130,11 +130,37 @@
             margin-top: 30px; 
             border: none; 
             padding: 20px; 
-            background: transparent; 
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            flex-direction: column;
+            width: 320px;
         }
+        .player-controls { display: flex; align-items: center; gap: 20px; width: 100%; justify-content: center; }
         .btn-music-main { background: #ff0080; color: white; font-size: 18px; padding: 15px 35px; border-radius: 8px; border: 2px solid #fff; box-shadow: 0 0 15px #ff0080; min-width: 140px; }
         .btn-nav { background: #222; color: #00f2ff; font-size: 26px; padding: 10px 25px; border-radius: 8px; border: 1px solid #00f2ff; }
         
+        /* ПРОКРУТКА И ТАЙМЕРЫ */
+        .seek-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        #seek-bar {
+            flex-grow: 1;
+            cursor: pointer;
+            accent-color: #00f2ff;
+            filter: drop-shadow(0 0 5px #00f2ff);
+        }
+        .time-txt {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: #00f2ff;
+            min-width: 45px;
+            text-shadow: 0 0 5px #00f2ff;
+        }
+
         button:active { transform: scale(0.9); }
 
         /* --- ТЕКСТ РЕЗУЛЬТАТА --- */
@@ -174,10 +200,17 @@
     </div>
 
     <div class="music-container">
-        <button class="btn-base btn-nav" onclick="prevTrack()">⏪️</button>
-        <button id="play-btn" class="btn-base btn-music-main" onclick="toggleMusic()">ИГРАТЬ 🎶</button>
-        <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
-        <div id="track-info">ТРЕК: 1 / 6</div>
+        <div class="player-controls">
+            <button class="btn-base btn-nav" onclick="prevTrack()">⏪️</button>
+            <button id="play-btn" class="btn-base btn-music-main" onclick="toggleMusic()">ИГРАТЬ 🎶</button>
+            <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
+        </div>
+        <div class="seek-container">
+            <span id="current-time" class="time-txt">00:00</span>
+            <input type="range" id="seek-bar" value="0" step="0.1">
+            <span id="duration-time" class="time-txt">00:00</span>
+        </div>
+        <div id="track-info">ТРЕК: 1 / 5</div>
     </div>
 
     <div id="random-result"></div>
@@ -190,11 +223,9 @@
     <script>
         const horrorSound = new Audio('https://www.myinstants.com/media/sounds/horror-ghost-sound-effect.mp3');
         
-        // ПЛЕЙЛИСТ ИЗ 6 ТРЕКОВ
         const playlist = [
             'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
             'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Rington.mp3',
             'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Bomfunk_MCs_-_Freestyler_48336265.mp3',
             'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Don_Omar_-_Danza_Kuduro_28587730.mp3',
             'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/NEFFEX_-_Inspired_76126743.mp3'
@@ -205,7 +236,38 @@
         audio.src = playlist[currentTrack];
         let isPlaying = false;
 
+        const seekBar = document.getElementById('seek-bar');
+        const currTimeLabel = document.getElementById('current-time');
+        const durTimeLabel = document.getElementById('duration-time');
+
         audio.onended = () => { nextTrack(); };
+
+        // Форматирование времени в MM:SS
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            let min = Math.floor(seconds / 60);
+            let sec = Math.floor(seconds % 60);
+            return (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+        }
+
+        // Обновление при загрузке данных о треке
+        audio.onloadedmetadata = () => {
+            durTimeLabel.textContent = formatTime(audio.duration);
+        };
+
+        // Обновление ползунка и текущего времени
+        audio.ontimeupdate = () => {
+            if (!isNaN(audio.duration)) {
+                seekBar.value = (audio.currentTime / audio.duration) * 100;
+                currTimeLabel.textContent = formatTime(audio.currentTime);
+            }
+        };
+
+        seekBar.oninput = () => {
+            if (!isNaN(audio.duration)) {
+                audio.currentTime = (seekBar.value / 100) * audio.duration;
+            }
+        };
 
         function updateInfo() {
             document.getElementById('track-info').textContent = `ТРЕК: ${currentTrack + 1} / ${playlist.length}`;
@@ -217,7 +279,7 @@
                 audio.pause();
                 btn.textContent = "ИГРАТЬ 🎶";
             } else {
-                audio.play().catch(e => console.log("Нажми на страницу для активации звука"));
+                audio.play().catch(e => console.log("Ошибка старта"));
                 btn.textContent = "ПАУЗА ⏸";
             }
             isPlaying = !isPlaying;
@@ -227,6 +289,8 @@
             audio.pause();
             audio.src = playlist[currentTrack];
             audio.load(); 
+            seekBar.value = 0;
+            currTimeLabel.textContent = "00:00";
             if (isPlaying) {
                 audio.play().catch(e => console.log("Ошибка старта"));
             }
@@ -250,7 +314,7 @@
             horrorSound.play().catch(() => {}); 
         }
 
-        const activities = ["Идём за шаурмой 🌯", "Сидим дома 🏠", "Идём на компы 🖥️", "Сгоняем в Лопатинский сад 🌳", "Идём кататься на лясиках🚲", "Идём в «Тарелку» 🍽️", "Идём гонять в Уно 🃏", "Идём бахнуть по кофе ☕", "Идём в боулинг или бильярд 🎳", "Идём кормить уток 🦆", "Залипнем в чат-рулетку 💻", "Сгоняем в клуб 🕺", "Идём слушать хиты 🎵", "Идём делать кринж-фотосессию 📸", "Идём прошвырнуться в магаз 🛍️", "Гоу в киноху 🍿", "Идём за чебуреками 🥟", "Берём семечки и на лавку 🌻", "Го на крепостную стену 🏰", "Идём искать заброшки 🏚️", "Го в настольный теннис 📓", "Просто пошатаемся по району 👟", "Идём на вокзал смотреть на поезда 🚂", "Закажем суши или пиццу 📽"];
+        const activities = ["Идём за шаурмой 🌯", "Сидим дома 🏠", "Идём на компы 🖥️", "Сгоняем в Лопатинский сад 🌳", "Идём кататься на лясиках🚲", "Идём в «Тарелку» 🍽️", "Идём гонять в Уно 🃏", "Идём бахнуть по кофе ☕", "Идём в боулинг или бильярд 🎳", "Идём кормить уток 🦆", "Залипнем в чат-рулетку 💻", "Сгоняем в клуб 🕺", "Идём слушать хиты 🎵", "Идём делать кринж-фотосессию 📸", "Идём прошвырнуться в магаз 🛍️", "Гоу в киноху  popcorn", "Идём за чебуреками 🥟", "Берём семечки и на лавку 🌻", "Го на крепостную стену 🏰", "Идём искать заброшки 🏚️", "Го в настольный теннис 📓", "Просто пошатаемся по району 👟", "Идём на вокзал смотреть на поезда 🚂", "Закажем суши или пиццу 📽"];
         const fatePhrases = ["«СТОПУДОВО!» ✅", "«ЗВУЧИТ КАК ПЛАН!» 🤝", "«ДА, ДЕЙСТВУЙ!» 🔥", "«ЭТО ЛУЧШИЙ ВАРИАНТ» ✨", "«ШАНСЫ 100%» 📈", "«БАЗА, НАДО ДЕЛАТЬ» 🗿", "«ПУШКА-ГОНКА, ДЕЛАЙ!» 🏎️", "«ОДОБРЯЮ, ЛЕТИМ!» 🚀", "«ДАЖЕ НЕ ДУМАЙ!» ⛔", "«ПЛОХАЯ ЗАТЕЯ» 🛑", "«ЛУЧШЕ НЕ НАДО...» ❌", "«ЗВУЧИТ КАК КРИНЖ» 😬", "«ТВОЯ ИНТУИЦИЯ ТЕБЯ ОБМАНЫВАЕТ» 🧠", "«СЕГОДНЯ ТОЧНО НЕ ТВОЙ ДЕНЬ» ☁️", "«ЗАБЕЙ, ОНО ТОГО НЕ СТОИТ» 🙅‍♂️", "«СПРОСИ ПОЗЖЕ...» ⏳", "«50 НА 50» ⚖️", "«ПОПРOБУЙ ЕЩЁ РАЗ» 🔄", "«СЛИШКОМ МНОГО ХОЧЕШЬ ЗНАТЬ» 🤫", "«СПРОСИ У ТОГО, КТО СИДИТ СПРАВА» 👉", "«ПОДУМАЙ ЕЩЁ 5 МИНУТ» 🤔", "«СЕЙЧАС НЕ ЛУЧШИЙ МОМЕНТ» 🌚", "«КИНЬ МОНЕТКУ, Я В ЗАМЕШАТЕЛЬСТВЕ» 🪙", "«А ТЫ САМ КАК ДУМАЕШЬ?» 🤨", "«РИСКНИ, ЖИЗНЬ ОДНА!» 🎡", "«ДА, НО ТОЛЬКО ЕСЛИ СЕЙЧАС ДЕНЬ РАЗРЕШИТ» 😎", "«МОЙ ОТВЕТ: ШАУРМА» 🌯"];
 
         let hideTimeout;
