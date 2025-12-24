@@ -177,7 +177,7 @@
         <button class="btn-base btn-nav" onclick="prevTrack()">⏪️</button>
         <button id="play-btn" class="btn-base btn-music-main" onclick="toggleMusic()">ИГРАТЬ 🎶</button>
         <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
-        <div id="track-info">ТРЕК: 1 / 3</div>
+        <div id="track-info">ТРЕК: 1 / 6</div>
     </div>
 
     <div id="random-result"></div>
@@ -190,11 +190,14 @@
     <script>
         const horrorSound = new Audio('https://www.myinstants.com/media/sounds/horror-ghost-sound-effect.mp3');
         
-        // ПЛЕЙЛИСТ ИЗ 3 ТРЕКОВ
+        // ПЛЕЙЛИСТ ИЗ 6 ТРЕКОВ
         const playlist = [
             'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
             'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Rington.mp3' // ТВОЯ ПЕСНЯ С GITHUB
+            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Rington.mp3',
+            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Bomfunk_MCs_-_Freestyler_48336265.mp3',
+            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Don_Omar_-_Danza_Kuduro_28587730.mp3',
+            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/NEFFEX_-_Inspired_76126743.mp3'
         ];
 
         let currentTrack = 0;
