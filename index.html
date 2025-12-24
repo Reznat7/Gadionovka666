@@ -66,7 +66,7 @@
         .meteor:nth-child(4) { left: 70%; animation-delay: 2s; }
         .meteor:nth-child(5) { left: 90%; animation-delay: 0.5s; }
 
-        /* --- ГИРЛЯНДЫ --- */
+        /* --- ГЕРЛЯНДЫ --- */
         .light { width: 12px; height: 18px; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; position: relative; transition: 0.3s; }
         .light::before { content: ''; position: absolute; background: #111; }
         .garland-top { width: 100%; height: 40px; border-bottom: 1px solid #222; display: flex; justify-content: space-around; padding: 0 5px; z-index: 10; }
@@ -99,7 +99,7 @@
             z-index: 2;
         }
 
-        /* --- КНОПКИ --- */
+        /* --- КОНТЕЙНЕРЫ КНОПОК --- */
         .button-container, .music-container {
             display: flex;
             flex-wrap: wrap;
@@ -125,12 +125,11 @@
         .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 22px; padding: 12px 40px; border: 3px solid #00f2ff; box-shadow: 0 0 15px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 2px 2px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 18px; padding: 12px 25px; border: 3px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3, inset 0 0 15px #4b0082; }
 
-        /* --- ПЛЕЕР (РАМКА УБРАНА) --- */
+        /* --- ПЛЕЕР --- */
         .music-container { 
             margin-top: 30px; 
-            border: none; /* Рамка удалена по просьбе */
+            border: none; 
             padding: 20px; 
-            border-radius: 15px; 
             background: transparent; 
         }
         .btn-music-main { background: #ff0080; color: white; font-size: 18px; padding: 15px 35px; border-radius: 8px; border: 2px solid #fff; box-shadow: 0 0 15px #ff0080; min-width: 140px; }
@@ -178,7 +177,7 @@
         <button class="btn-base btn-nav" onclick="prevTrack()">⏪️</button>
         <button id="play-btn" class="btn-base btn-music-main" onclick="toggleMusic()">ИГРАТЬ 🎶</button>
         <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
-        <div id="track-info">ТРЕК: 1 / 15</div>
+        <div id="track-info">ТРЕК: 1 / 3</div>
     </div>
 
     <div id="random-result"></div>
@@ -191,23 +190,11 @@
     <script>
         const horrorSound = new Audio('https://www.myinstants.com/media/sounds/horror-ghost-sound-effect.mp3');
         
-        // Обновленный плейлист с разнообразными песнями (разные жанры и вокал)
+        // ПЛЕЙЛИСТ ИЗ 3 ТРЕКОВ
         const playlist = [
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-            'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Ketsa/Alternative_Grooves/Ketsa_-_04_-_Flow.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-            'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/HoliznaCC0/Power_Pop_Ep/HoliznaCC0_-_03_-_My_Love.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
-            'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Ketsa/The_Lost_Files/Ketsa_-_11_-_Through_the_Mist.mp3',
+            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
             'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-            'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Chapter_One__Cold/Kai_Engel_-_04_-_Moonlight_Reprise.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
-            'https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Lofi-Music.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
-            'https://www.chosic.com/wp-content/uploads/2021/07/Cyberpunk-City.mp3',
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-            'https://www.chosic.com/wp-content/uploads/2020/06/Modern-Rock-Boy.mp3'
+            'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/Rington.mp3' // ТВОЯ ПЕСНЯ С GITHUB
         ];
 
         let currentTrack = 0;
@@ -218,7 +205,7 @@
         audio.onended = () => { nextTrack(); };
 
         function updateInfo() {
-            document.getElementById('track-info').textContent = `ТРЕК: ${currentTrack + 1} / 15`;
+            document.getElementById('track-info').textContent = `ТРЕК: ${currentTrack + 1} / ${playlist.length}`;
         }
 
         function toggleMusic() {
@@ -227,29 +214,30 @@
                 audio.pause();
                 btn.textContent = "ИГРАТЬ 🎶";
             } else {
-                audio.play().catch(e => console.log("Браузер блокирует автоплей"));
+                audio.play().catch(e => console.log("Нажми на страницу для активации звука"));
                 btn.textContent = "ПАУЗА ⏸";
             }
             isPlaying = !isPlaying;
         }
 
-        function loadAndPlay() {
+        function switchTrack() {
+            audio.pause();
             audio.src = playlist[currentTrack];
-            audio.load();
+            audio.load(); 
             if (isPlaying) {
-                audio.play().catch(e => console.log("Ошибка загрузки"));
+                audio.play().catch(e => console.log("Ошибка старта"));
             }
             updateInfo();
         }
 
         function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
-            loadAndPlay();
+            switchTrack();
         }
 
         function prevTrack() {
             currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
-            loadAndPlay();
+            switchTrack();
         }
 
         function toggleGarland() {
@@ -260,7 +248,7 @@
         }
 
         const activities = ["Идём за шаурмой 🌯", "Сидим дома 🏠", "Идём на компы 🖥️", "Сгоняем в Лопатинский сад 🌳", "Идём кататься на лясиках🚲", "Идём в «Тарелку» 🍽️", "Идём гонять в Уно 🃏", "Идём бахнуть по кофе ☕", "Идём в боулинг или бильярд 🎳", "Идём кормить уток 🦆", "Залипнем в чат-рулетку 💻", "Сгоняем в клуб 🕺", "Идём слушать хиты 🎵", "Идём делать кринж-фотосессию 📸", "Идём прошвырнуться в магаз 🛍️", "Гоу в киноху 🍿", "Идём за чебуреками 🥟", "Берём семечки и на лавку 🌻", "Го на крепостную стену 🏰", "Идём искать заброшки 🏚️", "Го в настольный теннис 📓", "Просто пошатаемся по району 👟", "Идём на вокзал смотреть на поезда 🚂", "Закажем суши или пиццу 📽"];
-        const fatePhrases = ["«СТОПУДОВО!» ✅", "«ЗВУЧИТ КАК ПЛАН!» 🤝", "«ДА, ДЕЙСТВУЙ!» 🔥", "«ЭТО ЛУЧШИЙ ВАРИАНТ» ✨", "«ШАНСЫ 100%» 📈", "«БАЗА, НАДО ДЕЛАТЬ» 🗿", "«ПУШКА-ГОНКА, ДЕЛАЙ!» 🏎️", "«ОДОБРЯЮ, ЛЕТИМ!» 🚀", "«ДАЖЕ НЕ ДУМАЙ!» ⛔", "«ПЛОХАЯ ЗАТЕЯ» 🛑", "«ЛУЧШЕ НЕ НАДО...» ❌", "«ЗВУЧИТ КАК КРИНЖ» 😬", "«ТВОЯ ИНТУИЦИЯ ТЕБЯ ОБМАНЫВАЕТ» 🧠", "«СЕГОДНЯ ТОЧНО НЕ ТВОЙ ДЕНЬ» ☁️", "«ЗАБЕЙ, ОНО ТОГО НЕ СТОИТ» 🙅‍♂️", "«СПРОСИ ПОЗЖЕ...» ⏳", "«50 НА 50» ⚖️", "«ПОПРОБУЙ ЕЩЁ РАЗ» 🔄", "«СЛИШКОМ МНОГО ХОЧЕШЬ ЗНАТЬ» 🤫", "«СПРОСИ У ТОГО, КТО СИДИТ СПРАВА» 👉", "«ПОДУМАЙ ЕЩЁ 5 МИНУТ» 🤔", "«СЕЙЧАС НЕ ЛУЧШИЙ МОМЕНТ» 🌚", "«КИНЬ МОНЕТКУ, Я В ЗАМЕШАТЕЛЬСТВЕ» 🪙", "«А ТЫ САМ КАК ДУМАЕШЬ?» 🤨", "«РИСКНИ, ЖИЗНЬ ОДНА!» 🎡", "«ДА, НО ТОЛЬКО ЕСЛИ СЕЙЧАС ДЕНЬ РАЗРЕШИТ» 😎", "«МОЙ ОТВЕТ: ШАУРМА» 🌯"];
+        const fatePhrases = ["«СТОПУДОВО!» ✅", "«ЗВУЧИТ КАК ПЛАН!» 🤝", "«ДА, ДЕЙСТВУЙ!» 🔥", "«ЭТО ЛУЧШИЙ ВАРИАНТ» ✨", "«ШАНСЫ 100%» 📈", "«БАЗА, НАДО ДЕЛАТЬ» 🗿", "«ПУШКА-ГОНКА, ДЕЛАЙ!» 🏎️", "«ОДОБРЯЮ, ЛЕТИМ!» 🚀", "«ДАЖЕ НЕ ДУМАЙ!» ⛔", "«ПЛОХАЯ ЗАТЕЯ» 🛑", "«ЛУЧШЕ НЕ НАДО...» ❌", "«ЗВУЧИТ КАК КРИНЖ» 😬", "«ТВОЯ ИНТУИЦИЯ ТЕБЯ ОБМАНЫВАЕТ» 🧠", "«СЕГОДНЯ ТОЧНО НЕ ТВОЙ ДЕНЬ» ☁️", "«ЗАБЕЙ, ОНО ТОГО НЕ СТОИТ» 🙅‍♂️", "«СПРОСИ ПОЗЖЕ...» ⏳", "«50 НА 50» ⚖️", "«ПОПРOБУЙ ЕЩЁ РАЗ» 🔄", "«СЛИШКОМ МНОГО ХОЧЕШЬ ЗНАТЬ» 🤫", "«СПРОСИ У ТОГО, КТО СИДИТ СПРАВА» 👉", "«ПОДУМАЙ ЕЩЁ 5 МИНУТ» 🤔", "«СЕЙЧАС НЕ ЛУЧШИЙ МОМЕНТ» 🌚", "«КИНЬ МОНЕТКУ, Я В ЗАМЕШАТЕЛЬСТВЕ» 🪙", "«А ТЫ САМ КАК ДУМАЕШЬ?» 🤨", "«РИСКНИ, ЖИЗНЬ ОДНА!» 🎡", "«ДА, НО ТОЛЬКО ЕСЛИ СЕЙЧАС ДЕНЬ РАЗРЕШИТ» 😎", "«МОЙ ОТВЕТ: ШАУРМА» 🌯"];
 
         let hideTimeout;
         function displayResult(text, styleClass) {
