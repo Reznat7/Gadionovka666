@@ -20,7 +20,7 @@
 
         @keyframes starsBlink { 0% { opacity: 1; } 100% { opacity: 0.6; } }
 
-        /* --- КОНТЕЙНЕР ЭФФЕКТОВ (СТРОГО НИЖНЯЯ ПОЛОВИНА) --- */
+        /* --- КОНТЕЙНЕР ЭФФЕКТОВ (НИЖНЯЯ ПОЛОВИНА) --- */
         #effect-container {
             position: fixed; top: 50vh; left: 0; width: 100%; height: 50vh;
             pointer-events: none; z-index: 1; overflow: hidden;
@@ -37,8 +37,6 @@
             box-shadow: 0 0 15px #00f2ff; transition: 0.3s;
         }
 
-        .particle { position: absolute; pointer-events: none; }
-        
         /* Лазеры и искры */
         .laser-ptr { position: absolute; width: 50px; height: 4px; border-radius: 4px; filter: blur(0.5px); }
         .laser-spark {
@@ -47,12 +45,15 @@
         }
         @keyframes spark-out { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
 
+        /* Частицы дождя/метеоров */
+        .particle { position: absolute; pointer-events: none; }
+        @keyframes fall { 0% { transform: translateY(-100px); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(60vh); opacity: 0; } }
+
         /* --- ГИРЛЯНДЫ --- */
         .light { width: 12px; height: 18px; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; position: relative; transition: 0.3s; }
         .light::before { content: ''; position: absolute; background: #111; }
         .garland-top { width: 100%; height: 40px; border-bottom: 1px solid #222; display: flex; justify-content: space-around; padding: 0 5px; z-index: 10; }
         .garland-top .light { margin-top: 15px; } 
-        .garland-top .light::before { top: -3px; left: 3px; width: 6px; height: 4px; }
         .garland-side { position: fixed; top: 0; height: 50vh; width: 20px; display: flex; flex-direction: column; justify-content: space-around; align-items: center; z-index: 5; }
         .left-s { left: 5px; } .right-s { right: 5px; }
         .on .light { animation: blink 0.8s infinite alternate; }
@@ -63,37 +64,41 @@
         .light:nth-child(4n+3) { background: #0066ff; color: #0066ff; }
         .light:nth-child(4n+4) { background: #ffff00; color: #ffff00; }
 
-        /* --- ИНТЕРФЕЙС (КНОПКИ В РЯД) --- */
+        /* --- ИНТЕРФЕЙС (КНОПКИ КАК НА СКРИНЕ) --- */
         h1 { font-family: 'Creepster', cursive; color: #FFD700; width: 98%; text-align: center; font-size: 14vw; margin: 40px 0 20px; text-transform: uppercase; letter-spacing: 1vw; text-shadow: 4px 4px 0px #4b3b00; z-index: 2; }
         
         .button-container { 
-            display: flex; flex-direction: row; flex-wrap: nowrap; 
-            justify-content: center; align-items: center; gap: 15px; 
+            display: flex; flex-direction: row; 
+            justify-content: center; align-items: center; gap: 20px; 
             margin-top: 15px; z-index: 100; width: 98%;
         }
 
         .btn-base { cursor: pointer; transition: 0.2s; text-transform: uppercase; font-weight: 900; display: flex; align-items: center; justify-content: center; border: none; }
-        .btn-random { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff; font-family: 'Roboto', sans-serif; font-size: 16px; padding: 12px 15px; border-radius: 12px; box-shadow: 0 0 15px #ff4500; }
-        .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 18px; padding: 12px 30px; border: 3px solid #00f2ff; box-shadow: 0 0 20px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 2px 2px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
-        .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 16px; padding: 12px 15px; border: 3px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
+        .btn-random { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border-radius: 15px; box-shadow: 0 0 20px #ff4500; }
+        .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 24px; padding: 15px 45px; border: 4px solid #00f2ff; box-shadow: 0 0 25px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 2px 2px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+        .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border: 4px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
 
-        .music-container { margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.7); border-radius: 20px; flex-direction: column; width: 400px; max-width: 90%; z-index: 100; display: flex; align-items: center; }
-        .player-controls { display: flex; align-items: center; gap: 15px; }
-        .btn-music-main { background: #ff0080; color: white; font-size: 18px; padding: 12px 30px; border-radius: 8px; border: 2px solid #fff; box-shadow: 0 0 15px #ff0080; }
-        .btn-nav { background: #222; color: #00f2ff; font-size: 24px; padding: 8px 15px; border-radius: 8px; border: 2px solid #00f2ff; }
-        .btn-shuffle { background: #222; color: #fff; font-size: 22px; border-radius: 50%; width: 55px; height: 55px; border: 2px solid #555; }
+        /* ПЛЕЕР */
+        .music-container { margin-top: 35px; padding: 25px; background: rgba(0,0,0,0.7); border-radius: 25px; flex-direction: column; width: 420px; max-width: 92%; z-index: 100; display: flex; align-items: center; }
+        .player-controls { display: flex; align-items: center; gap: 20px; }
+        .btn-music-main { background: #ff0080; color: white; font-size: 22px; padding: 15px 40px; border-radius: 12px; border: 2px solid #fff; box-shadow: 0 0 20px #ff0080; }
+        .btn-nav { background: #222; color: #00f2ff; font-size: 28px; padding: 10px 20px; border-radius: 10px; border: 2px solid #00f2ff; }
+        .btn-shuffle { background: #222; color: #fff; font-size: 26px; border-radius: 50%; width: 65px; height: 65px; border: 2px solid #555; margin-left: 10px;}
         .btn-shuffle.active { color: #00f2ff; border-color: #00f2ff; box-shadow: 0 0 15px #00f2ff; }
-        #seek-bar { width: 100%; height: 12px; cursor: pointer; accent-color: #00f2ff; margin: 15px 0; }
-        .time-txt, #track-info { font-family: 'Orbitron', sans-serif; color: #00f2ff; font-size: 18px; text-shadow: 0 0 5px #00f2ff; }
+        #seek-bar { width: 100%; height: 14px; cursor: pointer; accent-color: #00f2ff; margin: 20px 0; }
+        .time-txt, #track-info { font-family: 'Orbitron', sans-serif; color: #00f2ff; font-size: 20px; text-shadow: 0 0 5px #00f2ff; font-weight: bold; }
 
-        .result-wrapper { display: flex; flex-direction: column; align-items: center; margin: 20px 0; width: 95%; z-index: 100; height: 100px; }
-        #random-result { text-align: center; font-family: 'Creepster', cursive; font-size: 36px; opacity: 0; transition: opacity 0.5s; }
-        #countdown-box { font-family: 'Orbitron', sans-serif; font-size: 38px; color: #ff0000; opacity: 0; }
+        /* РЕЗУЛЬТАТ */
+        .result-wrapper { display: flex; flex-direction: column; align-items: center; margin: 25px 0; width: 95%; z-index: 100; min-height: 120px; }
+        #random-result { text-align: center; font-family: 'Creepster', cursive; font-size: 40px; opacity: 0; transition: opacity 0.5s; line-height: 1.2; }
+        #countdown-box { font-family: 'Orbitron', sans-serif; font-size: 45px; color: #ff0000; opacity: 0; margin-top: 10px; }
         .show { opacity: 1 !important; }
+        .pulse { animation: digitPulse 0.6s ease-out; }
+        @keyframes digitPulse { 0% { transform: scale(1); } 50% { transform: scale(1.6); } 100% { transform: scale(1); } }
         .fire-style { color: #ffcc00; text-shadow: 0 0 15px #ff4500; }
         .magic-style { color: #e0b0ff; text-shadow: 0 0 15px #9400d3; }
 
-        .pistols { position: fixed; bottom: 10px; display: flex; gap: 20px; font-size: 60px; filter: drop-shadow(0 0 10px gold); z-index: 10; }
+        .pistols { position: fixed; bottom: 15px; display: flex; gap: 30px; font-size: 70px; filter: drop-shadow(0 0 10px gold); z-index: 10; }
     </style>
 </head>
 <body>
@@ -120,7 +125,7 @@
             <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
             <button id="shuffle-btn" class="btn-base btn-shuffle" onclick="toggleShuffle()">🔀</button>
         </div>
-        <div style="display:flex; width:100%; align-items:center; gap:10px;">
+        <div style="display:flex; width:100%; align-items:center; gap:12px;">
             <span id="current-time" class="time-txt">00:00</span>
             <input type="range" id="seek-bar" value="0" step="0.1">
             <span id="duration-time" class="time-txt">00:00</span>
@@ -145,14 +150,14 @@
             'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/NEFFEX_-_Inspired_76126743.mp3'
         ];
 
-        let currentTrack = 0, isPlaying = false, isShuffle = false, loopAnim;
+        let currentTrack = 0, isPlaying = false, isShuffle = false, loopAnim, laserInterval;
         const audio = new Audio(); audio.src = playlist[currentTrack];
         const container = document.getElementById('effect-container');
 
         function createSpark(x, y, color) {
             const s = document.createElement('div');
             s.className = 'laser-spark'; s.style.left = x + 'px'; s.style.top = y + 'px';
-            s.style.background = color; s.style.boxShadow = `0 0 10px ${color}`;
+            s.style.background = color; s.style.boxShadow = `0 0 15px ${color}`;
             container.appendChild(s);
             setTimeout(() => s.remove(), 300);
         }
@@ -161,7 +166,7 @@
             function rain() {
                 for(let i=0; i<60; i++) {
                     let r = document.createElement('div'); r.className = 'particle';
-                    r.style.width = '2px'; r.style.height = '20px'; r.style.background = '#00f2ff';
+                    r.style.width = '2px'; r.style.height = '25px'; r.style.background = '#00f2ff';
                     r.style.left = Math.random()*100 + '%'; r.style.top = '-20px';
                     r.style.animation = `fall ${0.5 + Math.random()}s linear infinite`;
                     container.appendChild(r);
@@ -179,8 +184,8 @@
             },
             function disco() {
                 let d = document.createElement('div'); d.textContent = '🕺';
-                d.style.position = 'absolute'; d.style.bottom = '10px'; d.style.fontSize = '100px';
-                d.style.left = '45%'; d.style.animation = 'blink 0.5s infinite';
+                d.style.position = 'absolute'; d.style.bottom = '10px'; d.style.fontSize = '120px';
+                d.style.left = '45%'; d.style.animation = 'starsBlink 0.5s infinite';
                 container.appendChild(d);
             },
             function neonLaser() {
@@ -190,18 +195,18 @@
                     const el = document.createElement('div'); el.className = 'laser-ptr';
                     el.style.background = colors[i]; el.style.boxShadow = `0 0 10px ${colors[i]}`;
                     container.appendChild(el);
-                    beams.push({ el, col: colors[i], x: Math.random()*800, y: Math.random()*200, dx: (Math.random()-0.5)*8, dy: (Math.random()-0.5)*8 });
+                    beams.push({ el, col: colors[i], x: Math.random()*window.innerWidth, y: Math.random()*200, dx: (Math.random()-0.5)*10, dy: (Math.random()-0.5)*10 });
                 }
-                function animate() {
+                function anim() {
                     beams.forEach(b => {
                         b.x += b.dx; b.y += b.dy;
                         if(b.x <= 0 || b.x >= container.clientWidth - 50) { b.dx *= -1; createSpark(b.x, b.y, b.col); }
                         if(b.y <= 0 || b.y >= container.clientHeight - 4) { b.dy *= -1; createSpark(b.x, b.y, b.col); }
                         b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
                     });
-                    loopAnim = requestAnimationFrame(animate);
+                    loopAnim = requestAnimationFrame(anim);
                 }
-                animate();
+                anim();
             }
         ];
 
@@ -228,11 +233,15 @@
         function displayResult(text, styleClass) {
             const res = document.getElementById('random-result'), cd = document.getElementById('countdown-box');
             clearTimeout(hideTimeout); clearInterval(countInterval);
-            res.classList.remove('show', 'fire-style', 'magic-style'); cd.classList.remove('show');
+            res.classList.remove('show', 'fire-style', 'magic-style'); cd.classList.remove('show', 'pulse');
             setTimeout(() => {
                 res.textContent = text; res.classList.add('show', styleClass);
-                cd.classList.add('show'); let timeLeft = 5; cd.textContent = timeLeft;
-                countInterval = setInterval(() => { timeLeft--; cd.textContent = timeLeft; if(timeLeft <= 0) clearInterval(countInterval); }, 1000);
+                cd.classList.add('show', 'pulse'); let timeLeft = 5; cd.textContent = timeLeft;
+                countInterval = setInterval(() => { 
+                    timeLeft--; cd.textContent = timeLeft; 
+                    cd.classList.remove('pulse'); void cd.offsetWidth; cd.classList.add('pulse');
+                    if(timeLeft <= 0) clearInterval(countInterval); 
+                }, 1000);
                 hideTimeout = setTimeout(() => { res.classList.remove('show'); cd.classList.remove('show'); }, 5000);
             }, 50);
         }
