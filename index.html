@@ -20,13 +20,13 @@
 
         @keyframes starsBlink { 0% { opacity: 1; } 100% { opacity: 0.6; } }
 
-        /* --- КОНТЕЙНЕР ЭФФЕКТОВ (НИЖНЯЯ ПОЛОВИНА) --- */
+        /* --- ЗОНА ЭФФЕКТОВ (СТРОГО НИЖНЯЯ ПОЛОВИНА) --- */
         #effect-container {
             position: fixed; top: 50vh; left: 0; width: 100%; height: 50vh;
             pointer-events: none; z-index: 1; overflow: hidden;
         }
 
-        /* --- КНОПКА АТОМ ⚛️ --- */
+        /* --- КНОПКА АТОМ ⚛️ СЛЕВА --- */
         .btn-mode {
             position: fixed; top: 52vh; left: 10px;
             background: rgba(0, 242, 255, 0.2);
@@ -37,16 +37,13 @@
             box-shadow: 0 0 15px #00f2ff; transition: 0.3s;
         }
 
-        /* Лазеры и искры */
+        .particle { position: absolute; pointer-events: none; }
         .laser-ptr { position: absolute; width: 50px; height: 4px; border-radius: 4px; filter: blur(0.5px); }
         .laser-spark {
             position: absolute; width: 15px; height: 15px; border-radius: 50%;
             animation: spark-out 0.3s ease-out forwards;
         }
         @keyframes spark-out { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
-
-        /* Частицы дождя/метеоров */
-        .particle { position: absolute; pointer-events: none; }
         @keyframes fall { 0% { transform: translateY(-100px); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(60vh); opacity: 0; } }
 
         /* --- ГИРЛЯНДЫ --- */
@@ -59,46 +56,42 @@
         .on .light { animation: blink 0.8s infinite alternate; }
         .off .light { background: #111 !important; box-shadow: none !important; animation: none !important; }
         @keyframes blink { from { opacity: 0.4; } to { opacity: 1; box-shadow: 0 0 15px currentColor; } }
-        .light:nth-child(4n+1) { background: #ff0000; color: #ff0000; }
-        .light:nth-child(4n+2) { background: #00ff00; color: #00ff00; }
-        .light:nth-child(4n+3) { background: #0066ff; color: #0066ff; }
-        .light:nth-child(4n+4) { background: #ffff00; color: #ffff00; }
 
-        /* --- ИНТЕРФЕЙС (КНОПКИ КАК НА СКРИНЕ) --- */
+        /* --- ИНТЕРФЕЙС (КРУПНЫЕ КНОПКИ В РЯД) --- */
         h1 { font-family: 'Creepster', cursive; color: #FFD700; width: 98%; text-align: center; font-size: 14vw; margin: 40px 0 20px; text-transform: uppercase; letter-spacing: 1vw; text-shadow: 4px 4px 0px #4b3b00; z-index: 2; }
         
         .button-container { 
             display: flex; flex-direction: row; 
-            justify-content: center; align-items: center; gap: 20px; 
+            justify-content: center; align-items: center; gap: 15px; 
             margin-top: 15px; z-index: 100; width: 98%;
         }
 
         .btn-base { cursor: pointer; transition: 0.2s; text-transform: uppercase; font-weight: 900; display: flex; align-items: center; justify-content: center; border: none; }
-        .btn-random { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border-radius: 15px; box-shadow: 0 0 20px #ff4500; }
-        .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 24px; padding: 15px 45px; border: 4px solid #00f2ff; box-shadow: 0 0 25px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 2px 2px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
-        .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border: 4px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
+        .btn-random { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff; font-family: 'Roboto', sans-serif; font-size: 16px; padding: 12px 15px; border-radius: 12px; box-shadow: 0 0 15px #ff4500; }
+        .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 18px; padding: 12px 30px; border: 3px solid #00f2ff; box-shadow: 0 0 20px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 2px 2px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+        .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 16px; padding: 12px 15px; border: 3px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
 
         /* ПЛЕЕР */
-        .music-container { margin-top: 35px; padding: 25px; background: rgba(0,0,0,0.7); border-radius: 25px; flex-direction: column; width: 420px; max-width: 92%; z-index: 100; display: flex; align-items: center; }
-        .player-controls { display: flex; align-items: center; gap: 20px; }
-        .btn-music-main { background: #ff0080; color: white; font-size: 22px; padding: 15px 40px; border-radius: 12px; border: 2px solid #fff; box-shadow: 0 0 20px #ff0080; }
-        .btn-nav { background: #222; color: #00f2ff; font-size: 28px; padding: 10px 20px; border-radius: 10px; border: 2px solid #00f2ff; }
-        .btn-shuffle { background: #222; color: #fff; font-size: 26px; border-radius: 50%; width: 65px; height: 65px; border: 2px solid #555; margin-left: 10px;}
+        .music-container { margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.7); border-radius: 20px; flex-direction: column; width: 400px; max-width: 90%; z-index: 100; display: flex; align-items: center; }
+        .player-controls { display: flex; align-items: center; gap: 15px; }
+        .btn-music-main { background: #ff0080; color: white; font-size: 18px; padding: 12px 30px; border-radius: 8px; border: 2px solid #fff; box-shadow: 0 0 15px #ff0080; }
+        .btn-nav { background: #222; color: #00f2ff; font-size: 24px; padding: 8px 15px; border-radius: 8px; border: 2px solid #00f2ff; }
+        .btn-shuffle { background: #222; color: #fff; font-size: 22px; border-radius: 50%; width: 55px; height: 55px; border: 2px solid #555; margin-left: 10px;}
         .btn-shuffle.active { color: #00f2ff; border-color: #00f2ff; box-shadow: 0 0 15px #00f2ff; }
-        #seek-bar { width: 100%; height: 14px; cursor: pointer; accent-color: #00f2ff; margin: 20px 0; }
-        .time-txt, #track-info { font-family: 'Orbitron', sans-serif; color: #00f2ff; font-size: 20px; text-shadow: 0 0 5px #00f2ff; font-weight: bold; }
+        #seek-bar { width: 100%; height: 12px; cursor: pointer; accent-color: #00f2ff; margin: 15px 0; }
+        .time-txt, #track-info { font-family: 'Orbitron', sans-serif; color: #00f2ff; font-size: 18px; text-shadow: 0 0 5px #00f2ff; font-weight: bold; }
 
         /* РЕЗУЛЬТАТ */
-        .result-wrapper { display: flex; flex-direction: column; align-items: center; margin: 25px 0; width: 95%; z-index: 100; min-height: 120px; }
-        #random-result { text-align: center; font-family: 'Creepster', cursive; font-size: 40px; opacity: 0; transition: opacity 0.5s; line-height: 1.2; }
-        #countdown-box { font-family: 'Orbitron', sans-serif; font-size: 45px; color: #ff0000; opacity: 0; margin-top: 10px; }
+        .result-wrapper { display: flex; flex-direction: column; align-items: center; margin: 20px 0; width: 95%; z-index: 100; height: 120px; }
+        #random-result { text-align: center; font-family: 'Creepster', cursive; font-size: 36px; opacity: 0; transition: opacity 0.5s; line-height: 1.2; }
+        #countdown-box { font-family: 'Orbitron', sans-serif; font-size: 38px; color: #ff0000; opacity: 0; }
         .show { opacity: 1 !important; }
         .pulse { animation: digitPulse 0.6s ease-out; }
         @keyframes digitPulse { 0% { transform: scale(1); } 50% { transform: scale(1.6); } 100% { transform: scale(1); } }
         .fire-style { color: #ffcc00; text-shadow: 0 0 15px #ff4500; }
         .magic-style { color: #e0b0ff; text-shadow: 0 0 15px #9400d3; }
 
-        .pistols { position: fixed; bottom: 15px; display: flex; gap: 30px; font-size: 70px; filter: drop-shadow(0 0 10px gold); z-index: 10; }
+        .pistols { position: fixed; bottom: 10px; display: flex; gap: 20px; font-size: 60px; filter: drop-shadow(0 0 10px gold); z-index: 10; }
     </style>
 </head>
 <body>
@@ -125,7 +118,7 @@
             <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
             <button id="shuffle-btn" class="btn-base btn-shuffle" onclick="toggleShuffle()">🔀</button>
         </div>
-        <div style="display:flex; width:100%; align-items:center; gap:12px;">
+        <div style="display:flex; width:100%; align-items:center; gap:10px;">
             <span id="current-time" class="time-txt">00:00</span>
             <input type="range" id="seek-bar" value="0" step="0.1">
             <span id="duration-time" class="time-txt">00:00</span>
@@ -150,7 +143,7 @@
             'https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/NEFFEX_-_Inspired_76126743.mp3'
         ];
 
-        let currentTrack = 0, isPlaying = false, isShuffle = false, loopAnim, laserInterval;
+        let currentTrack = 0, isPlaying = false, isShuffle = false, loopAnim;
         const audio = new Audio(); audio.src = playlist[currentTrack];
         const container = document.getElementById('effect-container');
 
@@ -166,7 +159,7 @@
             function rain() {
                 for(let i=0; i<60; i++) {
                     let r = document.createElement('div'); r.className = 'particle';
-                    r.style.width = '2px'; r.style.height = '25px'; r.style.background = '#00f2ff';
+                    r.style.width = '2px'; r.style.height = '20px'; r.style.background = '#00f2ff';
                     r.style.left = Math.random()*100 + '%'; r.style.top = '-20px';
                     r.style.animation = `fall ${0.5 + Math.random()}s linear infinite`;
                     container.appendChild(r);
@@ -184,8 +177,8 @@
             },
             function disco() {
                 let d = document.createElement('div'); d.textContent = '🕺';
-                d.style.position = 'absolute'; d.style.bottom = '10px'; d.style.fontSize = '120px';
-                d.style.left = '45%'; d.style.animation = 'starsBlink 0.5s infinite';
+                d.style.position = 'absolute'; d.style.bottom = '10px'; d.style.fontSize = '100px';
+                d.style.left = '45%'; d.style.animation = 'blink 0.5s infinite';
                 container.appendChild(d);
             },
             function neonLaser() {
@@ -215,7 +208,6 @@
             effects[Math.floor(Math.random()*effects.length)]();
         }
 
-        // ПЛЕЕР
         const seekBar = document.getElementById('seek-bar'), currTimeLabel = document.getElementById('current-time'), durTimeLabel = document.getElementById('duration-time');
         audio.onended = () => nextTrack();
         audio.onloadedmetadata = () => durTimeLabel.textContent = formatTime(audio.duration);
@@ -228,7 +220,11 @@
         function prevTrack() { currentTrack = (currentTrack-1+playlist.length)%playlist.length; switchTrack(); }
         function switchTrack() { audio.pause(); audio.src = playlist[currentTrack]; audio.load(); if(isPlaying) audio.play(); document.getElementById('track-info').textContent = `ТРЕК: ${currentTrack+1} / 5`; }
 
-        // РАНДОМ
+        // --- СПИСКИ ТЕКСТОВ ---
+        const activities = ["Идём за шаурмой 🌯", "Сидим дома 🏠", "Идём на компы 🖥️", "Сгоняем в Лопатинский сад 🌳", "Идём кататься на лясиках🚲", "Идём в «Тарелку» 🍽️", "Идём гонять в Уно 🃏", "Идём бахнуть по кофе ☕", "Идём в боулинг или бильярд 🎳", "Идём кормить уток (или голубей) 🦆", "Залипнем в чат-рулетку 💻", "Сгоняем в клуб 🕺", "Идём слушать хиты 🎵", "Идём делать кринж-фотосессию 📸", "Идём прошвырнуться в магаз 🛍️", "Гоу в киноху 🍿", "Идём за чебуреками 🥟", "Берём семечки и на лавку 🌻", "Го на крепостную стену 🏰", "Идём искать заброшки 🏚️", "Го в настольный теннис 🏓", "Просто пошатаемся по району 👟", "Идём на вокзал смотреть на поезда 🚂", "гоу закажим суши или пиццу и глянем фельмец📽"];
+
+        const fatePhrases = ["«Стопудово!» ✅", "«Звучит как план!» 🤝", "«Да, действуй!» 🔥", "«Это лучший вариант» ✨", "«Шансы 100%» 📈", "«База, надо делать» 🗿", "«Пушка-гонка, делай!» 🏎️", "«Одобряю, летим!» 🚀", "«Даже не думай!» ⛔", "«Плохая затея» 🛑", "«Лучше не надо...» ❌", "«Звучит как кринж» 😬", "«Твоя интуиция тебя обманывает» 🧠", "«Сегодня точно не твой день» ☁️", "«Забей, оно того не стоит» 🙅‍♂️", "«Спроси позже...» ⏳", "«50 на 50» ⚖️", "«Попробуй ещё раз» 🔄", "«Слишком много хочешь знать» 🤫", "«Спроси у того, кто сидит справа» 👉", "«Подумай ещё 5 минут» 🤔", "«Сейчас не лучший момент» 🌚", "«Кинь монетку, я в замешательстве» 🪙", "«А ты сам как думаешь?» 🤨", "«Рискни, жизнь одна!» 🎡", "«Да, но только если сейчас день разрешит» 😎", "«Мой ответ: шаурма» 🌯"];
+        
         let hideTimeout, countInterval;
         function displayResult(text, styleClass) {
             const res = document.getElementById('random-result'), cd = document.getElementById('countdown-box');
@@ -245,8 +241,8 @@
                 hideTimeout = setTimeout(() => { res.classList.remove('show'); cd.classList.remove('show'); }, 5000);
             }, 50);
         }
-        function showRandomPhrase() { displayResult("НУЖНО ПЕРЕКУСИТЬ 🌯", 'fire-style'); }
-        function showFate() { displayResult("«СТОПУДОВО!» ✅", 'magic-style'); }
+        function showRandomPhrase() { displayResult(activities[Math.floor(Math.random()*activities.length)], 'fire-style'); }
+        function showFate() { displayResult(fatePhrases[Math.floor(Math.random()*fatePhrases.length)], 'magic-style'); }
         function toggleGarland() { 
             const nodes = document.querySelectorAll('.garland-node');
             nodes.forEach(n => { n.classList.toggle('on'); n.classList.toggle('off'); });
