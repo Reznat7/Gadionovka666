@@ -5,6 +5,7 @@
     <title>GADIONOVKA666</title>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@900&family=Roboto:wght@900&display=swap" rel="stylesheet">
     <style>
+        /* --- БАЗОВЫЕ СТИЛИ (НЕ МЕНЯЛИСЬ) --- */
         body {
             margin: 0; padding: 0; background: #000;
             background-image: 
@@ -61,14 +62,65 @@
         .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 24px; padding: 15px 45px; border: 4px solid #00f2ff; box-shadow: 0 0 25px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 3px 3px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border: 4px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
 
-        .music-container { margin-top: 35px; padding: 25px; background: rgba(0,0,0,0.7); border-radius: 25px; flex-direction: column; width: 420px; max-width: 92%; z-index: 100; display: flex; align-items: center; }
-        .player-controls { display: flex; align-items: center; gap: 20px; }
-        .btn-music-main { background: #ff0080; color: white; font-size: 22px; padding: 15px 40px; border-radius: 12px; border: 2px solid #fff; box-shadow: 0 0 20px #ff0080; }
-        .btn-nav { background: #222; color: #00f2ff; font-size: 28px; padding: 10px 20px; border-radius: 10px; border: 2px solid #00f2ff; }
-        .btn-shuffle { background: #222; color: #fff; font-size: 26px; border-radius: 50%; width: 65px; height: 65px; border: 2px solid #555; }
-        .btn-shuffle.active { color: #00f2ff; border-color: #00f2ff; box-shadow: 0 0 15px #00f2ff; }
-        #seek-bar { width: 100%; height: 14px; cursor: pointer; accent-color: #00f2ff; margin: 20px 0; }
-        .time-txt, #track-info { font-family: 'Orbitron', sans-serif; color: #00f2ff; font-size: 20px; font-weight: bold; }
+        /* --- ПЛЕЕР (УВЕЛИЧЕН) --- */
+        .music-container {
+            margin-top: 35px;
+            padding: 30px; /* Увеличен padding */
+            background: rgba(0,0,0,0.7);
+            border-radius: 30px; /* Увеличен радиус */
+            flex-direction: column;
+            width: 480px; /* Увеличена ширина */
+            max-width: 95%;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 25px; /* Увеличен отступ между кнопками */
+        }
+        .btn-music-main {
+            background: #ff0080;
+            color: white;
+            font-size: 26px; /* Увеличен шрифт */
+            padding: 18px 45px; /* Увеличены отступы */
+            border-radius: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 25px #ff0080;
+        }
+        .btn-nav {
+            background: #222;
+            color: #00f2ff;
+            font-size: 32px; /* Увеличен шрифт */
+            padding: 12px 25px; /* Увеличены отступы */
+            border-radius: 12px;
+            border: 3px solid #00f2ff;
+        }
+        .btn-shuffle {
+            background: #222;
+            color: #fff;
+            font-size: 30px; /* Увеличен шрифт */
+            border-radius: 50%;
+            width: 75px; /* Увеличен размер */
+            height: 75px; /* Увеличен размер */
+            border: 3px solid #555;
+        }
+        .btn-shuffle.active { color: #00f2ff; border-color: #00f2ff; box-shadow: 0 0 20px #00f2ff; }
+        #seek-bar {
+            width: 100%;
+            height: 18px; /* Увеличена высота ползунка */
+            cursor: pointer;
+            accent-color: #00f2ff;
+            margin: 25px 0; /* Увеличен отступ */
+        }
+        .time-txt, #track-info {
+            font-family: 'Orbitron', sans-serif;
+            color: #00f2ff;
+            font-size: 24px; /* Увеличен шрифт */
+            font-weight: bold;
+        }
+        /* ------------------------ */
 
         .result-wrapper { display: flex; flex-direction: column; align-items: center; margin: 25px 0; width: 95%; z-index: 100; min-height: 120px; }
         #random-result { text-align: center; font-family: 'Creepster', cursive; font-size: 38px; opacity: 0; transition: opacity 0.5s; line-height: 1.2; }
@@ -83,16 +135,12 @@
     </style>
 </head>
 <body>
-
     <div class="garland-top on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div></div>
     <div class="garland-side left-s on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div></div>
     <div class="garland-side right-s on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div></div>
-
     <button class="btn-mode" onclick="changeMode()">⚛️</button>
     <div id="effect-container"></div>
-
     <h1>GADIONOVKA666</h1>
-
     <div class="button-container">
         <button class="btn-base btn-random" onclick="showRandomPhrase()">А ЧЕМ ЖЕ ЗАНЯТЬСЯ🤔 ?</button>
         <button class="btn-base btn-toggle" onclick="toggleGarland()">ЖМЯК</button>
@@ -106,25 +154,22 @@
             <button class="btn-base btn-nav" onclick="nextTrack()">⏩️</button>
             <button id="shuffle-btn" class="btn-base btn-shuffle" onclick="toggleShuffle()">🔀</button>
         </div>
-        <div style="display:flex; width:100%; align-items:center; gap:12px;">
+        <div style="display:flex; width:100%; align-items:center; gap:15px;">
             <span id="current-time" class="time-txt">00:00</span>
             <input type="range" id="seek-bar" value="0" step="0.1">
             <span id="duration-time" class="time-txt">00:00</span>
         </div>
         <div id="track-info">ТРЕК: 1 / 121</div>
     </div>
-
     <div class="result-wrapper">
         <div id="random-result"></div>
         <div id="countdown-box"></div>
     </div>
-
     <div class="pistols">🔫 🔫</div>
 
     <script>
         const horrorSound = new Audio('https://www.myinstants.com/media/sounds/horror-ghost-sound-effect.mp3');
         
-        // --- ПОЛНЫЙ СПИСОК ПЕСЕН ---
         const songs = [
             "3OH!3 - Starstrukk.mp3", "5 Seconds of Summer - Teeth.mp3", "AC_DC - Back In Black.mp3", "Afric Simone - Hafanana.mp3",
             "Aroon Bassi - I Wanna Be Your Slave Tiktok Edition; Originally Performed by Mane.mp3",
@@ -183,10 +228,7 @@
         let currentTrack = 0, isPlaying = false, isShuffle = false, loopAnim;
         const audio = new Audio();
         const baseUrl = "https://raw.githubusercontent.com/Reznat7/Gadionovka666/main/music/";
-        
-        // Установка первой песни
         audio.src = baseUrl + encodeURIComponent(songs[currentTrack]);
-
         const container = document.getElementById('effect-container');
 
         function createSpark(x, y, color) {
@@ -229,7 +271,7 @@
                     const el = document.createElement('div'); el.className = 'laser-ptr';
                     el.style.background = colors[i]; el.style.boxShadow = `0 0 10px ${colors[i]}`;
                     container.appendChild(el);
-                    beams.push({ el, col: colors[i], x: Math.random()*window.innerWidth, y: Math.random()*150, dx: (Math.random()-0.5)*10, dy: (Math.random()-0.5)*10 });
+                    beams.push({ el, col: colors[i], x: Math.random()*container.clientWidth, y: Math.random()*container.clientHeight, dx: (Math.random()-0.5)*10, dy: (Math.random()-0.5)*10 });
                 }
                 function anim() {
                     beams.forEach(b => {
@@ -255,6 +297,7 @@
         audio.ontimeupdate = () => { if(!isNaN(audio.duration)){ seekBar.value = (audio.currentTime/audio.duration)*100; currTimeLabel.textContent = formatTime(audio.currentTime); } };
         seekBar.oninput = () => { if(!isNaN(audio.duration)) audio.currentTime = (seekBar.value/100)*audio.duration; };
         function formatTime(s) { let m=Math.floor(s/60), sc=Math.floor(s%60); return (m<10?"0"+m:m)+":"+(sc<10?"0"+sc:sc); }
+        
         function toggleMusic() { 
             const btn=document.getElementById('play-btn'); 
             if(isPlaying){ audio.pause(); btn.textContent="ИГРАТЬ 🎶"; } 
@@ -297,6 +340,7 @@
         }
         function showRandomPhrase() { displayResult(activities[Math.floor(Math.random()*activities.length)], 'fire-style'); }
         function showFate() { displayResult(fatePhrases[Math.floor(Math.random()*fatePhrases.length)], 'magic-style'); }
+        
         function toggleGarland() { 
             const nodes = document.querySelectorAll('.garland-node');
             nodes.forEach(n => { n.classList.toggle('on'); n.classList.toggle('off'); });
