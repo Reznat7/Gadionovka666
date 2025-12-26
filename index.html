@@ -24,7 +24,7 @@
             pointer-events: none; z-index: 1; overflow: hidden;
         }
 
-        /* --- КНОПКА АТОМ ⚛️ (СЛЕВА) --- */
+        /* КНОПКА АТОМ ⚛️ */
         .btn-mode {
             position: fixed; top: 52vh; left: 10px;
             background: rgba(0, 242, 255, 0.2);
@@ -35,18 +35,18 @@
             box-shadow: 0 0 15px #00f2ff;
         }
 
-        /* --- НОВАЯ КНОПКА СПРАВА В РАМКЕ --- */
-        .right-framed-container {
+        /* --- ЗЕЛЕНАЯ КНОПКА СПРАВА В РАМКЕ --- */
+        .right-side-button {
             position: fixed; top: 52vh; right: 10px;
             display: flex; flex-direction: column; align-items: center;
             z-index: 1000;
         }
         .btn-second-page {
             background-color: #000;
-            color: #00ff00; /* Зеленый неон */
+            color: #00ff00;
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px; font-weight: 900;
-            padding: 12px 20px;
+            font-size: 16px; font-weight: 900;
+            padding: 12px 18px;
             border: 3px solid #00ff00;
             border-radius: 12px;
             box-shadow: 0 0 20px #00ff00, inset 0 0 10px #00ff00;
@@ -54,7 +54,6 @@
             cursor: pointer; text-decoration: none;
             transition: 0.3s; text-align: center;
         }
-        .btn-second-page:active { transform: scale(0.9); }
         .garland-mini-frame { display: flex; gap: 8px; margin: 5px 0; pointer-events: none; }
 
         /* ЭФФЕКТЫ */
@@ -79,7 +78,7 @@
         .light:nth-child(4n+3) { background: #0066ff; color: #0066ff; }
         .light:nth-child(4n+4) { background: #ffff00; color: #ffff00; }
 
-        /* ИНТЕРФЕЙС */
+        /* КНОПКИ */
         h1 { font-family: 'Creepster', cursive; color: #FFD700; width: 98%; text-align: center; font-size: 14vw; margin: 40px 0 20px; text-transform: uppercase; letter-spacing: 1vw; text-shadow: 4px 4px 0px #4b3b00; z-index: 2; }
         .button-container { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px; margin-top: 15px; z-index: 100; width: 98%; }
         .btn-base { cursor: pointer; transition: 0.2s; text-transform: uppercase; font-weight: 900; display: flex; align-items: center; justify-content: center; border: none; }
@@ -87,7 +86,7 @@
         .btn-toggle { background-color: #000; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 24px; padding: 15px 45px; border: 4px solid #00f2ff; box-shadow: 0 0 25px #00f2ff, inset 0 0 10px #ff00e0; text-shadow: 3px 3px 0px #ff00e0; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .btn-ball { background: radial-gradient(circle at 30% 30%, #4b0082, #000); color: #fff; font-family: 'Roboto', sans-serif; font-size: 20px; padding: 15px 25px; border: 4px solid #9400d3; border-radius: 50px; box-shadow: 0 0 20px #9400d3; }
 
-        /* ПЛЕЕР (УВЕЛИЧЕН) */
+        /* ПЛЕЕР */
         .music-container {
             margin-top: 35px; padding: 30px; background: rgba(0,0,0,0.7); border-radius: 30px; 
             flex-direction: column; width: 480px; max-width: 95%; z-index: 100; display: flex; align-items: center;
@@ -115,10 +114,10 @@
     <div class="garland-top on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div></div>
     <div class="garland-side left-s on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div></div>
     <div class="garland-side right-s on garland-node"><div class="light"></div><div class="light"></div><div class="light"></div></div>
-
+    
     <button class="btn-mode" onclick="changeMode()">⚛️</button>
 
-    <div class="right-framed-container">
+    <div class="right-side-button">
         <div class="garland-mini-frame on garland-node">
             <div class="light"></div><div class="light"></div><div class="light"></div>
         </div>
